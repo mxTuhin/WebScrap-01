@@ -38,7 +38,7 @@ include('config/dbConfig.php');
   <nav style="color: black" class="navbar navbar-transparent navbar-color-on-scroll fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
     <div class="container">
       <div class="navbar-translate">
-        <a class="navbar-brand" href="https://demos.creative-tim.com/material-kit/index.html">
+        <a class="navbar-brand" href="#">
           Web Scrap Logs </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="sr-only">Toggle navigation</span>
@@ -134,7 +134,7 @@ include('config/dbConfig.php');
               </div>
               <div class="modal-footer">
 
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
 
               </div>
           </div>
