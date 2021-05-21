@@ -11,7 +11,9 @@ Coded by Creative Tim
 =========================================================
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
-<!DOCTYPE html>
+<?php
+include('config/dbConfig.php');
+?>
 <html lang="en">
 
 <head>
@@ -72,7 +74,7 @@ The above copyright notice and this permission notice shall be included in all c
     <br>
     <h2 style="color: #1dc7de">Please choose a category to see grant</h2>
     <form>
-      <select class="form-control" id="category">
+      <select onchange="fetch_grant()" class="form-control" id="category">
         <option value="NotSelected" disabled selected>Choose a category</option>
         <option value="LGBTQ+">LGBTQ+</option>
         <option value="Women">Women</option>
@@ -81,26 +83,63 @@ The above copyright notice and this permission notice shall be included in all c
       </select>
     </form>
   </div>
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <i class="material-icons">clear</i>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.
-          </p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-link">Nice Button</button>
-          <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
+  <div class="container">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Category</th>
+        <th scope="col">Created At</th>
+      </tr>
+      </thead>
+      <tbody id="grant_list">
+              <?php
+                    $sql = "SELECT * FROM data";
+                    $resultMember = mysqli_query($db, $sql);
+                    $i = 1;
+                    while($data = mysqli_fetch_assoc($resultMember)){
+                ?>
+                        <tr onclick="show_info('<?php echo $data['title'] ?>', '<?php echo $data['category'] ?>', ' <?php echo mysqli_real_escape_string($db, $data['text']) ?>')" data-toggle="modal" data-target="#rowInfoViewer">
+                            <th scope="row"><?php echo $i ?></th>
+                            <td><?php echo $data['title'] ?></td>
+                            <td><?php echo $data['category'] ?></td>
+                            <td><?php echo $data['created_at'] ?></td>
+                        </tr>
+
+              <?php
+                    }
+              ?>
+
+      </tbody>
+    </table>
+
   </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="rowInfoViewer" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5  class="modal-title" id="exampleModalLongTitle"> <span class="text-info" id="modal_title"> Default Title </span> <small> <span class="text-warning" id="modal_category">(Default Category)</span> </small> </h5>
+
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <p class="text-primary" id="modal_text">Default Text</p>
+
+              </div>
+              <div class="modal-footer">
+
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+              </div>
+          </div>
+      </div>
+  </div>
+
   <!--  End Modal -->
   <footer class="footer" data-background-color="black">
     <div class="container">
@@ -140,6 +179,10 @@ The above copyright notice and this permission notice shall be included in all c
   <!--   Core JS Files   -->
   <script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
   <script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+          crossorigin="anonymous"></script>
   <script src="./assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
   <script src="./assets/js/plugins/moment.min.js"></script>
   <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
@@ -167,6 +210,40 @@ The above copyright notice and this permission notice shall be included in all c
       }
     }
   </script>
+
+<script>
+function show_info(title, category, text){
+    $("#modal_text").html(text);
+    $("#modal_title").html(title);
+    $("#modal_category").html("("+category+")");
+
+
+
+}
+</script>
+
+<script>
+    function fetch_grant(){
+        var cat = document.getElementById("category").value;
+        console.log(cat)
+
+        $.ajax({
+            type : 'get',
+            url : 'fetch_grant.php',
+            data:{
+                'category': cat
+
+            },
+            success:function(data){
+                console.log(data);
+                document.getElementById("grant_list").innerHTML=data;
+
+            }
+        });
+
+    }
+</script>
+
 </body>
 
 </html>
