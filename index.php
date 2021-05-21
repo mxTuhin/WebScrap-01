@@ -51,17 +51,17 @@ include('config/dbConfig.php');
         <ul class="navbar-nav ml-auto">
 
           <li class="nav-item">
-            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="https://twitter.com/CreativeTim" target="_blank" data-original-title="Follow us on Twitter" rel="nofollow">
+            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="#" target="_blank" data-original-title="Follow us on Twitter" rel="nofollow">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="https://www.facebook.com/CreativeTim" target="_blank" data-original-title="Like us on Facebook" rel="nofollow">
+            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="#" target="_blank" data-original-title="Like us on Facebook" rel="nofollow">
               <i class="fa fa-facebook-square"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="https://www.instagram.com/CreativeTimOfficial" target="_blank" data-original-title="Follow us on Instagram" rel="nofollow">
+            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="#" target="_blank" data-original-title="Follow us on Instagram" rel="nofollow">
               <i class="fa fa-instagram"></i>
             </a>
           </li>
@@ -73,6 +73,7 @@ include('config/dbConfig.php');
   <div align="center" class="container">
     <br>
     <h2 style="color: #1dc7de">Please choose a category to see grant</h2>
+      <h3><small>(Click on rows to reveal details)</small></h3>
     <form>
       <select onchange="fetch_grant()" class="form-control" id="category">
         <option value="NotSelected" disabled selected>Choose a category</option>
